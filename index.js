@@ -1,14 +1,22 @@
 const app = {
-    init: function(selctor){
+    init: function(selector){
+        this.max = 0;
         document
-            .querySelector(selctor)
-            .addEventListener('submit', this.handelSubmit)
+            .querySelector(selector)
+            .addEventListener('submit', (ev)=>{
+                ev.preventDefault();
+                this.handelSubmit(ev);
+            })
     },
 
     handelSubmit: function(ev){
-        ev.preventDefault();
-        console.log(ev.target.flickName.value);
-        ev.target.flickName.value = '';
+        //ev.preventDefault();
+        const flick = {
+            id: ++this.max,
+            name: ev.target.flickName.value,
+        }
+        ev.target.reset();
+        console.log(flick);
     },
 }
 
