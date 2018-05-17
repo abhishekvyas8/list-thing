@@ -25,10 +25,10 @@ const app = {
             name: ev.target.flickName.value,
         }
 
-        this.flicks.push(flick);
+        this.flicks.unshift(flick);
 
         const item = this.renderListItem(flick);
-        this.list.appendChild(item);
+        this.list.insertBefore(item, this.list.firstChild);
 
         ev.target.reset();
     },
