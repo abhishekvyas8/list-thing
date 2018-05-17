@@ -1,5 +1,6 @@
 const app = {
-    init: function(selector){
+    init(selector){
+        this.flicks = [];
         this.max = 0;
         this.list = document.querySelector(selector.listSelector);
 
@@ -11,17 +12,19 @@ const app = {
             })
     },
 
-    renderListItem: function(flick){
+    renderListItem(flick){
         const item = document.createElement('li');
         item.textContent = flick.name;
         return item
     },
 
-    handelSubmit: function(ev){
+    handelSubmit(ev){
         const flick = {
             id: ++this.max,
             name: ev.target.flickName.value,
         }
+
+        this.flicks.push(flick);
 
         const item = this.renderListItem(flick);
         this.list.appendChild(item);
