@@ -1,5 +1,5 @@
-const app = {
-    init(selector){
+class App{
+    constructor(selector){
         this.flicks = [];
         this.max = 0;
         this.list = document.querySelector(selector.listSelector);
@@ -11,14 +11,14 @@ const app = {
                 ev.preventDefault();
                 this.handelSubmit(ev);
             })
-    },
+    }
 
     removeFlick(item, flick, ev){
        item.remove();
 
        const i = this.flicks.indexOf(flick);
        this.flicks.splice(i, 1);
-    },
+    }
 
     renderListItem(flick){
         const item = this.template.cloneNode(true);
@@ -32,7 +32,7 @@ const app = {
             .querySelector('.remove.button')
             .addEventListener('click', this.removeFlick.bind(this,item, flick));
         return item
-    },
+    }
 
     handelSubmit(ev){
         const flick = {
@@ -46,11 +46,11 @@ const app = {
         this.list.insertBefore(item, this.list.firstChild);
 
         ev.target.reset();
-    },
+    }
 }
 
-app.init({
+const app = new App({
     formSelector: '#flickForm',
     listSelector: '#flickList',
     templateSelector: '.flick.template',
-})
+});
