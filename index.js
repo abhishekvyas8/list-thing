@@ -24,13 +24,40 @@ class App{
         flick.fav = item.classList.toggle('fav');
     }
 
+    toggleEditable(item, flick, ev){
+        const nameField = item.querySelector('.flickName');
+        const btn = item.querySelector('.edit.button');
+
+        if(nameField.isContentEditable){
+            nameField.contentEditable = false;
+            btn.textContent = 'edit';
+            btn.classList.remove('success');
+        }
+        else{
+            nameField.contentEditable = true;
+            nameField.focus();
+            btn.textContent = 'save';
+            btn.classList.add('success');
+            
+            //update array
+            flick.name = nameField.textContent;
+        } 
+    }
+
+    saveOnEnter(item, flick, ev){
+        if(ev.key === 'Enter'){
+            this.toggleEditable(item, flick)
+        }
+    }
+
     renderListItem(flick){
         const item = this.template.cloneNode(true);
         item.classList.remove('template');
         item.dataset.id = flick.id;
-        item
-            .querySelector('.flickName')
-            .textContent = flick.name;
+        
+        const nameSpan = item.querySelector('.flickName')
+        nameSpan.textContent = flick.name;
+        nameSpan.addEventListener('keypress', this.saveOnEnter.bind(this, item, flick));
         
         item
             .querySelector('.remove.button')
@@ -39,6 +66,10 @@ class App{
         item
             .querySelector('.fav.button')
             .addEventListener('click', this.favFlick.bind(this, item, flick));
+
+        item
+            .querySelector('.edit.button')
+            .addEventListener('click', this.toggleEditable.bind(this, item, flick));
 
         return item
     }
